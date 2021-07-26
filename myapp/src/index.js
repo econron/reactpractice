@@ -2,21 +2,21 @@ import React from 'react';
 import ReactDOM from 'react-dom';
 import './index.css';
 
-function formatName(user){
-    return user.firstName + ' ' + user.lastName;
+function Welcome(props) {
+    return <h1>{props.name}</h1>
+}
+const element = <Welcome name="aron" />
+
+function App() {
+    return <div>
+        <Welcome name="tester1"/>
+        <Welcome name="tester2"/>
+        <Welcome name="tester3"/>
+    </div>
 }
 
-const user = {
-    'firstName': 'Okuyama',
-    'lastName': 'Aron'
-};
-
-// 関数の値を埋め込むには{}を利用する
-const element = (
-    <h1>Hello, {formatName(user)}</h1>
-);
-
+// コンポーネントはクラスだけではなく、関数もなりうる
 ReactDOM.render(
-  element,
+  <App />,
   document.getElementById('root')
 );
