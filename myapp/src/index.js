@@ -2,21 +2,39 @@ import React from 'react';
 import ReactDOM from 'react-dom';
 import './index.css';
 
-function Welcome(props) {
-    return <h1>{props.name}</h1>
-}
-const element = <Welcome name="aron" />
+class Clock extends React.Component {
+    constructor(props) {
+        super(props);
+        this.state = {date: new Date()};
+    }
 
-function App() {
-    return <div>
-        <Welcome name="tester1"/>
-        <Welcome name="tester2"/>
-        <Welcome name="tester3"/>
-    </div>
-}
+    componentDidMount() {
+        this.timerID = setInterval(() => this.tick(), 1000);
+    }
 
-// コンポーネントはクラスだけではなく、関数もなりうる
-ReactDOM.render(
-  <App />,
-  document.getElementById('root')
-);
+    componentWillUnmount() {
+        clearInterval(this.timerID);
+    }
+
+    tick() {
+        this.setState({
+            date: new Date()
+        });
+    }
+
+    render() {
+        return (<div>
+            <h1>Hello, world!</h1>
+            <h2>It is {this.state.date.toLocaleTimeString()}.</h2>
+          </div>);
+    }
+  }
+  
+  function tick() {
+    ReactDOM.render(
+      <Clock />,
+      document.getElementById('root')
+    );
+  }
+  
+  setInterval(tick, 1000);
