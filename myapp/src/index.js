@@ -2,66 +2,64 @@ import React, { useDebugValue } from 'react';
 import ReactDOM from 'react-dom';
 import './index.css';
 
-// class NameForm extends React.Component {
-//     constructor(props) {
-//         super(props);
-//         this.state = {value : ''};
-//         this.handleChange = this.handleChange.bind(this)
-//         this.handleSubmit = this.handleSubmit.bind(this)
-//     }
-
-//     handleChange(event) {
-//         this.setState({value: event.target.value});
-//     }
-
-//     handleSubmit(event){
-//         alert('submit');
-//         event.preventDefault();
-//     }
-
-//     render() {
-//         return(
-//             <form onSubmit={this.handleSubmit}>
-//                 <label>
-//                     Name:
-//                     <input type="text" value={this.state.value} onChange={this.handleChange} />
-//                 </label>
-//                 <input type="submit" name="submit" value="送信！" />
-//             </form>
-//         );
-//     }
-// }
-
-class EssayForm extends React.Component {
+class Reservation extends React.Component {
     constructor(props) {
-        super(props)
+        super(props);
+        // 初期値設定１
         this.state = {
-            value: "default"
-        }
-        this.handleChange = this.handleChange.bind(this);
-        this.handleSubmit = this.handleSubmit.bind(this);
+            isGoing: true,
+            mumberOfGuests: 2
+        };
+        // inputタイプの変更を常に受け付ける
+        this.handleInputChange = this.handleInputChange.bind(this);
     }
-    handleChange(event) {
-        this.setState({value: event.target.value});
+
+    handleInputChange(event) {
+        const target = event.target;
+        const value = target.type === "checkbox" ? target.checked : target.value ;
+        const name = target.name;
+
+        this.state = this.setState({
+            [name] : value
+        });
     }
-    handleSubmit(event) {
-        event.preventDefault();
-    }
+    
     render() {
         return (
-            <form onSubmit={this.handleSubmit}>
-                <label>
-                    Essay
-                    <textarea value={this.state.value} onChange={this.handleChange} />
-                </label>
-                <input type="submit" value="Submit" />
-            </form>
+        <form>
+        <label>
+          Is going:
+          <input
+            name="isGoing"
+            type="checkbox"
+            // stateを常に参照している
+            checked={this.state.isGoing}
+            onChange={this.handleInputChange} />
+        </label>
+        <br />
+        <label>
+          Number of guests:
+          <input
+          // nameで認識する
+            name="numberOfGuests"
+            type="number"
+            // stateを参照している
+            value={this.state.numberOfGuests}
+            onChange={this.handleInputChange} />
+        </label>
+        </form>
         );
     }
 }
 
+//　書き方？
+// ①input nameに割り当てる名称を決定する
+// ②初期値があればコンストラクタで割り当てておく
+// ③input typeでnameの値をコンストラクタの名称と等しくする this.state.isGoingなどでstateを常に参照する状態にする
+
+
 ReactDOM.render(
     // <NameForm />,
-    <EssayForm />,
+    <Reservation />,
     document.getElementById('root')
 );
